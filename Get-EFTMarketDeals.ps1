@@ -1,4 +1,4 @@
-[CmdletBinding]
+[CmdletBinding()]
 Param(
     [Parameter(Mandatory = $False, HelpMessage = "Minimum profit in roubles you want to show")]
     $minprofit = 500,
