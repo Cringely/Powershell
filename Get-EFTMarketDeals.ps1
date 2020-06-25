@@ -5,6 +5,7 @@ Param(
     [Parameter(Mandatory = $False, HelpMessage = "Max amount of time in minutes an item was scanned. Items on the flea don't usually last more than 5 minutes")]
     $mintime = 15
 )
+
 $col = @()
 $items = (Invoke-WebRequest -Headers @{ "x-api-key" = "oeLxJNwYfdgRL4be" } https://tarkov-market.com/api/v1/items/all).content | ConvertFrom-Json
 
@@ -19,9 +20,9 @@ foreach ($item in $items) {
     }
 }
 
-$col | sort -Descending potentialProfit | select @{N = 'Name'; E = { $_.name } },
+$col | Sort-Object -Descending potentialProfit | Select-Object @{N = 'Name'; E = { $_.name } },
 @{N = 'Flea Market Price'; E = { $_.price } },
 @{N = 'Trader Sell Price'; E = { $_.traderprice } },
 tradername,
 @{N = 'Potential profit'; E = { $_.potentialProfit } },
-@{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | ogv
+@{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Out-GridView
