@@ -12,7 +12,6 @@ $items = (Invoke-WebRequest -Headers @{ "x-api-key" = "oeLxJNwYfdgRL4be" } https
 foreach ($item in $items) {
     if ( [string]::IsNullOrEmpty($item.traderName) -or [string]::IsNullOrEmpty($item.traderPrice) -or $item.price -eq 0 ) { continue }
     $ts = (New-TimeSpan -End (get-date).ToUniversalTime() -Start $item.updated).TotalMinutes
-    $ts
     $profit = $item.traderprice - $item.price
     if ( $profit -gt $minprofit -and $ts -lt $mintime ) { 
         $item | Add-Member -type NoteProperty -Name "potentialProfit" -value $profit
@@ -25,4 +24,4 @@ $col | Sort-Object -Descending potentialProfit | Select-Object @{N = 'Name'; E =
 @{N = 'Trader Sell Price'; E = { $_.traderprice } },
 tradername,
 @{N = 'Potential profit'; E = { $_.potentialProfit } },
-@{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Out-GridView
+@{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Out-GridView -Title "Results pulled from Tarkov-Market.com"
