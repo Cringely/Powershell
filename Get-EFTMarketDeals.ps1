@@ -6,7 +6,8 @@ Function Get-EFTMarketDeals {
         [Parameter(Mandatory = $False, HelpMessage = "Max amount of time in minutes an item was scanned. Items on the flea don't usually last more than 5 minutes")]
         $mintime = '15',
         [Parameter(Mandatory = $True, HelpMessage = "API key for market data source")]
-        $apikey = ''
+        $apikey = '',
+        [switch]$ogv
     )
 
     $col = @()
@@ -27,11 +28,20 @@ Function Get-EFTMarketDeals {
         break
     }
 
-    $col | Sort-Object -Descending potentialProfit | Select-Object @{N = 'Name'; E = { $_.name } },
-    @{N = 'Flea Market Price'; E = { $_.price } },
-    @{N = 'Trader Sell Price'; E = { $_.traderprice } },
-    tradername,
-    @{N = 'Potential profit'; E = { $_.potentialProfit } },
-    @{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Format-Table -Autosize #Out-GridView -Title "Results pulled from Tarkov-Market.com"
-
+    if ( $ogv ) {
+        $col | Sort-Object -Descending potentialProfit | Select-Object @{N = 'Name'; E = { $_.name } },
+        @{N = 'Flea Market Price'; E = { $_.price } },
+        @{N = 'Trader Sell Price'; E = { $_.traderprice } },
+        tradername,
+        @{N = 'Potential profit'; E = { $_.potentialProfit } },
+        @{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Out-GridView -Title "Results pulled from Tarkov-Market.com"
+    }
+    else {
+        $col | Sort-Object -Descending potentialProfit | Select-Object @{N = 'Name'; E = { $_.name } },
+        @{N = 'Flea Market Price'; E = { $_.price } },
+        @{N = 'Trader Sell Price'; E = { $_.traderprice } },
+        tradername,
+        @{N = 'Potential profit'; E = { $_.potentialProfit } },
+        @{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Format-Table -Autosize
+    }
 }
