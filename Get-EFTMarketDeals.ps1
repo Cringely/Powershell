@@ -23,7 +23,7 @@ foreach ($item in $items) {
 
 if ( $col.count -eq 0 ) { 
 	Write-Host -F Red "No items have been scanned in the past $mintime minutes that would vendor for at least $minprofit roubles!"
-	stop
+	break
 }
 
 $col | Sort-Object -Descending potentialProfit | Select-Object @{N = 'Name'; E = { $_.name } },
