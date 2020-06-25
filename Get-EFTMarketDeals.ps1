@@ -32,6 +32,6 @@ Function Get-EFTMarketDeals {
     @{N = 'Trader Sell Price'; E = { $_.traderprice } },
     tradername,
     @{N = 'Potential profit'; E = { $_.potentialProfit } },
-    @{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Format-Table -groupby tradername -Autosize #Out-GridView -Title "Results pulled from Tarkov-Market.com"
+    @{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Format-Table -Autosize #Out-GridView -Title "Results pulled from Tarkov-Market.com"
 
 }
