@@ -23,5 +23,11 @@ Change the minimum profit margin using the `-minprofit #` parameter like this:
  example:
   ```powershell
  Get-EFTMarketDeals -mintime 30
- Get-EFTMarketDeals -mintime 180
+ Get-EFTMarketDeals -mintime 180 -minprofit 24724
+ ```
+
+Change the output from a table to a popup sortable window with the `-ogv` parameter:
+  ```powershell
+ Get-EFTMarketDeals -mintime 5 -minprofit 1000 -ogv
+ Get-EFTMarketDeals -ogv
  ```
