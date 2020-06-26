@@ -41,6 +41,6 @@ Function Get-EFTMarketDeals {
         @{N = 'Trader Sell Price'; E = { $_.traderprice } },
         tradername,
         @{N = 'Potential profit'; E = { $_.potentialProfit } },
-        @{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Format-Table -Autosize
+        @{N = 'Last Scanned'; E = { "$([math]::Round(((get-date).ToUniversalTime() - $_.updated).TotalMinutes))m ago" } } | Format-Table -Wrap
     }
 }
