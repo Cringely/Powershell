@@ -1,3 +1,3 @@
 ## wat?
 
-Some dumb generic repo
+Some generic repo
